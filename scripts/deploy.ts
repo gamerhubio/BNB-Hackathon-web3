@@ -7,7 +7,7 @@ async function main() {
 
   console.log("Account balance:", (await deployer.getBalance()).toString());
 
-  const GamerhubManager = await ethers.getContractFactory("GamerhubManager"); //Replace with name of your smart contract
+  const GamerhubManager = await ethers.getContractFactory("GamerhubManager"); 
   const gamerhubManager = await GamerhubManager.deploy();
 
   console.log("contract address:", gamerhubManager.address);
