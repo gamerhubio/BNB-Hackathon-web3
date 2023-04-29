@@ -55,6 +55,16 @@ contract GamerhubManager {
         packages[_package] = Prices(_package, _duration, _amount);
     }
 
+   /** @dev get details for different packages.
+      * @param _package the selected package.
+      */
+    function getPackage (uint _package ) external view returns(uint duration, uint amount){
+        //return package detail
+       return(packages[_package].duration, packages[_package].amount);
+    }
+
+
+
         
     /**
      *  @dev Subscribes caller.
