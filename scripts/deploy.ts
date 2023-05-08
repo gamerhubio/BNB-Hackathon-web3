@@ -10,11 +10,25 @@ async function main() {
   const GamerhubManager = await ethers.getContractFactory("GamerhubManager"); 
   const gamerhubManager = await GamerhubManager.deploy();
 
+  const GamerhubToken = await ethers.getContractFactory("GamerhubToken"); 
+  const gamerhubToken = await GamerhubToken.deploy();
+
+  const Payout = await ethers.getContractFactory("Payout"); 
+  const payout = await Payout.deploy();
+
   console.log("contract address:", gamerhubManager.address);
-  await gamerhubManager.setPackage(0,1, ethers.utils.parseUnits("10", "ether"))
+
+  //set token address on payout
+  await payout.setAddress(gamerhubToken.address)
+
+  await gamerhubManager.setPackage(0,2630000, ethers.utils.parseUnits("0.02991913", "ether"))
+  await gamerhubManager.setPackage(1,2630000, ethers.utils.parseUnits("0.04489368", "ether"))
+  await gamerhubManager.setPackage(0,2630000, ethers.utils.parseUnits("0.05986822", "ether"))
  
   const mypackage = await gamerhubManager.getPackage(0)
-  console.log("package value:",mypackage);
+  const mypackage1 = await gamerhubManager.getPackage(1)
+  const mypackage2 = await gamerhubManager.getPackage(2)
+  console.log("package value:",mypackage,mypackage1,mypackage2);
 }
 
 main()
