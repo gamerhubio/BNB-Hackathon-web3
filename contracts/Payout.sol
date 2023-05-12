@@ -36,7 +36,7 @@ contract Payout is ChainlinkClient, ConfirmedOwner {
      * Create a Chainlink request to retrieve API response, find the target
      * data, then multiply by 1000000000000000000 (to remove decimal places from data).
      */
-    function requestVolumeData() public returns (bytes32 requestId) {
+    function requestVolumeData(string memory url) public returns (bytes32 requestId) {
         Chainlink.Request memory req = buildChainlinkRequest(
             jobId,
             address(this),
@@ -46,12 +46,12 @@ contract Payout is ChainlinkClient, ConfirmedOwner {
         // Set the URL to perform the GET request on
         req.add(
             "get",
-            "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=ETH&tsyms=USD"
+            url
         );
 
         
-        // request.add("path", "RAW.ETH.USD.VOLUME24HOUR"); // Chainlink nodes prior to 1.0.0 support this format
-        req.add("path", "RAW,ETH,USD,VOLUME24HOUR"); // Chainlink nodes 1.0.0 and later support this format
+        // request.add("path", "toPay"); // Chainlink nodes prior to 1.0.0 support this format
+        req.add("path", "toPay"); // Chainlink nodes 1.0.0 and later support this format
 
         // Multiply the result by 1000000000000000000 to remove decimals
         int256 timesAmount = 10 ** 18;
